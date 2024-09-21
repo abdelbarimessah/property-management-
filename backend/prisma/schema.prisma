@@ -1,0 +1,87 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("POSTGRES_URL")
+}
+
+
+
+model Property {
+  id             Int        @id @default(autoincrement())
+  name           String     @db.VarChar(255)
+  address        String     @db.VarChar(255)
+  type           PropertyType
+  number_of_units Int        @default(0)
+  rental_cost    Decimal    @db.Decimal(10, 2)
+  tenants        Tenant[]  
+  created_at     DateTime   @default(now())
+  updated_at     DateTime   @updatedAt
+}
+
+model Tenant {
+  id             Int        @id @default(autoincrement())
+  name           String     @db.VarChar(255)
+  contact_details String    @db.VarChar(255)
+  property       Property   @relation(fields: [property_id], references: [id], onDelete: Cascade)
+  property_id    Int
+  section        String?    @db.VarChar(50)
+  rentalPayments RentalPayment[]
+  created_at     DateTime   @default(now())
+  updated_at     DateTime   @updatedAt
+}
+
+model RentalPayment {
+  id             Int        @id @default(autoincrement())
+  tenant         Tenant     @relation(fields: [tenant_id], references: [id], onDelete: Cascade)
+  tenant_id      Int
+  amount         Decimal    @db.Decimal(10, 2)
+  payment_date   DateTime
+  settled        Boolean    @default(false)
+  created_at     DateTime   @default(now())
+  updated_at     DateTime   @updatedAt
+}
+
+model PropertyManager {
+  id             Int        @id @default(autoincrement())
+  username       String     @unique @db.VarChar(255)
+  password_hash  String     @db.VarChar(255)
+  email          String     @unique @db.VarChar(255)
+  created_at     DateTime   @default(now())
+  updated_at     DateTime   @updatedAt
+}
+
+enum PropertyType {
+  apartment
+  house
+}
+
+
+// model Post {
+//   id        Int      @id @default(autoincrement())
+//   title     String
+//   content   String?
+//   published Boolean? @default(false)
+//   author    User?    @relation(fields: [authorId], references: [id])
+//   authorId  Int?
+// }
+
+
+// CREATE TABLE properties (
+//     id SERIAL PRIMARY KEY,
+//     name VARCHAR(255) NOT NULL,
+//     address VARCHAR(255) NOT NULL,
+//     type VARCHAR(50) CHECK (type IN ('apartment', 'house')) NOT NULL,
+//     number_of_units INT CHECK (number_of_units >= 0) NOT NULL,
+//     rental_cost DECIMAL(10, 2) NOT NULL,
+//     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+//     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+// );
