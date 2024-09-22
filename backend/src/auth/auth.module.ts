@@ -8,7 +8,7 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
 @Module({
   providers: [AuthService, LocalStrategy, JwtService],
   imports:[
-    ConfigModule.forRoot(), // Add this if it's not already present
+    ConfigModule.forRoot(), 
     JwtModule.registerAsync({
       imports: [ConfigModule],
       inject: [ConfigService],

@@ -31,15 +31,6 @@ export class AuthService {
     return user;
   }
 
-  // async login(user: PropertyManager) {
-    
-  //   const payload = { username: user.username, sub: user.id };
-    
-  //   return {
-  //     access_token: await this.jwtService.signAsync(payload),
-  //   };
-  // }
-
   async login(user: PropertyManager) {
     const payload = { username: user.username, id: user.id };
     return {

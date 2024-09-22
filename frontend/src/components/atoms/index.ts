@@ -1,0 +1,5 @@
+export { default as MessageAndLink } from "./MessageAndLink"
+export { default as SignButton } from "./SignButton"
+export { default as TextAndDiscription } from "./TextAndDiscription"
+export { default as InputPassword } from "./InputPassword"
+export { default as InputName } from "./InputName"
