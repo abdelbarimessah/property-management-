@@ -1,9 +1,7 @@
-function SignUpPage() {
-    return (
-        <div>
+import { SignUp } from "@/components/template";
 
-        </div>
-    )
+function SignUpPage() {
+  return <SignUp />;
 }
 
-export default SignUpPage
+export default SignUpPage;

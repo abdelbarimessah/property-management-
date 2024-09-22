@@ -1,7 +1,7 @@
-"use client";
+'use client'
 import { InputName, InputPassword } from "@/components/atoms";
 
-const SignInInputs = (props: any) => {
+const SignUpInputs = (props: any) => {
   const { usernameData, passwordData } = props ?? {};
 
   return (
@@ -13,6 +13,7 @@ const SignInInputs = (props: any) => {
         alt="ProfileIconSignIn"
         classname="h-[72px]"
       />
+
       <InputPassword
         passwordData={passwordData}
         name="Password"
@@ -24,4 +25,4 @@ const SignInInputs = (props: any) => {
   );
 };
 
-export default SignInInputs;
+export default SignUpInputs;
