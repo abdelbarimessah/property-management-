@@ -1,18 +1,31 @@
-import { Controller, Get } from "@nestjs/common";
-import { JwtService } from "@nestjs/jwt";
+import { Body, Controller, Get, Post, Req, UseGuards } from "@nestjs/common";
 import { AuthService } from "./auth.service";
+import { AuthGuard } from "@nestjs/passport";
+import { RegisterRequestDto } from '../dtos/register-request.dto';
+import { Public } from '../decorators/public.decorator';
 
-
-
+@Public()
 @Controller('auth')
 export class AuthController {
     constructor(
         private authService: AuthService,
-        private jwtService: JwtService,
     ) { }
 
-    @Get('login')
-    async login() {
-        return "hello first endpoint";
+
+
+    @UseGuards(AuthGuard('local'))
+    @Post('login')
+    async login(@Req() req) {
+        
+        return this.authService.login(req.user);
+    }
+
+
+
+    @Post('register')
+    async register(
+        @Body() registerBody: RegisterRequestDto,
+    ) {
+        return await this.authService.register(registerBody);
     }
 }
