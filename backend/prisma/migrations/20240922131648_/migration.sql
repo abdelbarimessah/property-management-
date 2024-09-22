@@ -45,8 +45,7 @@ CREATE TABLE "RentalPayment" (
 CREATE TABLE "PropertyManager" (
     "id" SERIAL NOT NULL,
     "username" VARCHAR(255) NOT NULL,
-    "password_hash" VARCHAR(255) NOT NULL,
-    "email" VARCHAR(255) NOT NULL,
+    "password" VARCHAR(255) NOT NULL,
     "created_at" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updated_at" TIMESTAMP(3) NOT NULL,
 
@@ -55,9 +54,6 @@ CREATE TABLE "PropertyManager" (
 
 -- CreateIndex
 CREATE UNIQUE INDEX "PropertyManager_username_key" ON "PropertyManager"("username");
-
--- CreateIndex
-CREATE UNIQUE INDEX "PropertyManager_email_key" ON "PropertyManager"("email");
 
 -- AddForeignKey
 ALTER TABLE "Tenant" ADD CONSTRAINT "Tenant_property_id_fkey" FOREIGN KEY ("property_id") REFERENCES "Property"("id") ON DELETE CASCADE ON UPDATE CASCADE;
