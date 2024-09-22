@@ -34,5 +34,6 @@ export class AuthController {
         @Body() registerBody: RegisterRequestDto,
     ) {
         return await this.authService.register(registerBody);
+
     }
 }

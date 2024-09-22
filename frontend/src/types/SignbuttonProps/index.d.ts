@@ -6,4 +6,5 @@ export interface SignbuttonProps {
   spanClassName?: string;
   username?: string;
   password?: string;
+  SignType: string;
 }

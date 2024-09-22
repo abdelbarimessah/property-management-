@@ -1,31 +1,55 @@
-'use client'
-import { SignbuttonProps } from '@/types';
-import { cn } from '@/lib/utils';
-import axios from 'axios';
-import error from 'next/error';
-import { useRouter } from 'next/navigation';
+"use client";
+import { SignbuttonProps } from "@/types";
+import { cn } from "@/lib/utils";
+import axios from "axios";
+import error from "next/error";
+import { useRouter } from "next/navigation";
+import { toast } from "sonner";
 
 axios.defaults.withCredentials = true;
 
-
 function SignButton(props: SignbuttonProps) {
-  const { name, containerClassName, boxClassName, spanClassName, username, password } =
-    props ?? {};
-  const router = useRouter()
+  const {
+    name,
+    containerClassName,
+    boxClassName,
+    spanClassName,
+    username,
+    password,
+    SignType,
+  } = props ?? {};
+  const router = useRouter();
 
   async function handleSubmitClick() {
-    const data = { username: username, password: password }
-    axios.post(`${process.env.NEXT_PUBLIC_API_URL}/auth/login`, data)
-      .then(response => {
-        router.push("/")
-        console.log(response);
+    const data = { username: username, password: password };
 
-      })
-      .catch(error => {
-        console.error(error);
-      });
+    if (SignType === "login") {
+      axios
+        .post(`${process.env.NEXT_PUBLIC_API_URL}/auth/login`, data)
+        .then((response) => {
+          toast.success("login succesfly.")
+          router.push("/Home");
+          console.log(response);
+        })
+        .catch((error) => {
+          toast.error("username or password incorrect, try again please.")
+          console.error(error);
+        });
+    } else if (SignType === "registre") {
+      axios
+        .post(`${process.env.NEXT_PUBLIC_API_URL}/auth/register`, data)
+        .then((response) => {
+          toast.success("register succesfly.")
+          router.push("/SignIn");
+          console.log(response);
+        })
+        .catch((error) => {
+          
+          toast.error("error in the sign up, try again please.")
+          console.error(error);
+        });
+    }
   }
-
 
   return (
     <div className={cn(`pt-[22px]`, containerClassName)}>
@@ -38,7 +62,7 @@ function SignButton(props: SignbuttonProps) {
       >
         <span
           className={cn(
-            'text-[27px] font-poppins font-semibold ',
+            "text-[27px] font-poppins font-semibold ",
             spanClassName
           )}
         >
