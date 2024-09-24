@@ -16,7 +16,7 @@ datasource db {
 model Property {
   id              Int          @id @default(autoincrement())
   name            String       @db.VarChar(255)
-  address         String       @db.VarChar(255)
+  // address         String       @db.VarChar(255)
   type            PropertyType
   number_of_units Int          @default(0)
   rental_cost     Decimal      @db.Decimal(10, 2)

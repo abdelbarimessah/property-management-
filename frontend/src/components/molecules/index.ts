@@ -1,2 +1,5 @@
 export { default as SignInInputs } from './SignInInputs'
 export { default as SignUpInputs } from './SignUpInputs'
+export { default as LeftHeader } from './LeftHeader'
+export { default as NavBareProfile } from './NavBareProfile'
+export { default as NavBareSections } from './NavBareSections'
