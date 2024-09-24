@@ -5,15 +5,15 @@ export async function middleware(request: NextRequest) {
   const cookie = request.cookies.get("authorization");
   if (!cookie) return redirect("/SignIn");
   const backendUrl = process.env.NEXT_PUBLIC_API_URL;
+  console.log("the backend url is : ", backendUrl);
 
-  const res = await fetch(`${backendUrl}/user/me`, {
+
+  const res = await fetch('http://localhost:3000/user/me', {
     headers: {
       Cookie: `authorization=${cookie.value}`,
     },
     credentials: "include",
   });
-
-  console.log({ response: res });
 
   if (!res.ok) return redirect("/SignIn");
 
@@ -22,7 +22,7 @@ export async function middleware(request: NextRequest) {
 
 export const config = {
   matcher: [
-    "/Home/:path*",
+    "/Dashboard/:path*",
   ],
 };
 

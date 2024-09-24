@@ -2,7 +2,6 @@
 import { SignbuttonProps } from "@/types";
 import { cn } from "@/lib/utils";
 import axios from "axios";
-import error from "next/error";
 import { useRouter } from "next/navigation";
 import { toast } from "sonner";
 
@@ -28,8 +27,7 @@ function SignButton(props: SignbuttonProps) {
         .post(`${process.env.NEXT_PUBLIC_API_URL}/auth/login`, data)
         .then((response) => {
           toast.success("login succesfly.")
-          router.push("/Home");
-          console.log(response);
+          router.push("/Dashboard/Properties");
         })
         .catch((error) => {
           toast.error("username or password incorrect, try again please.")
@@ -41,7 +39,6 @@ function SignButton(props: SignbuttonProps) {
         .then((response) => {
           toast.success("register succesfly.")
           router.push("/SignIn");
-          console.log(response);
         })
         .catch((error) => {
           

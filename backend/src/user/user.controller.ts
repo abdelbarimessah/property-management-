@@ -17,7 +17,6 @@ export class UsersController {
 
     @Get('me')
     async getProfile(@CurrentUser() user: PropertyManager) {
-        Logger.log("the current use is ", user);
         return user;
     }
 }
