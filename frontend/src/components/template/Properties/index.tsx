@@ -1,5 +1,9 @@
+'use client'
 import { PagesPath, PropertiesFilterAndAdd } from "@/components/atoms"
+import axios from "axios";
 import Image from "next/image"
+import { useEffect, useState } from "react";
+import { toast } from "sonner";
 
 function Properties() {
     return (
@@ -11,7 +15,7 @@ function Properties() {
                 alt="ArrowLeft"
                 spanClassname=" text-[#4693F8]"
             />
-            <div className="w-full bg-[#F2F8FF] flex flex-col rounded-[19px] h-[500px] pt-[10px] px-[10px] gap-[20px]">
+            <div className="w-full bg-[#F2F8FF] flex flex-col rounded-[19px] h-[500px] pt-[10px] px-[10px] gap-[20px] relative">
                 <PropertiesFilterAndAdd />
                 <PropertiesTable />
             </div>
@@ -23,52 +27,99 @@ export default Properties
 
 
 function PropertiesTable() {
+
+    const [data, setData] = useState([])
+
+    useEffect(() => {
+        axios
+            .get(`${process.env.NEXT_PUBLIC_API_URL}/user/allProperty`)
+            .then((response) => {
+                setData(response.data)
+            })
+            .catch((error) => {
+                console.error(error);
+            });
+    })
+
     return (
         <div className="w-full flex flex-col ">
             <PropertiesTableHead />
-            <PropertiesTableContent/>
-            <PropertiesTableSeparator />
-            <PropertiesTableContent/>
-            <PropertiesTableSeparator />
-            <PropertiesTableContent/>
-            <PropertiesTableSeparator />
+
+            {data.map((item: any, index: number) => (
+                <PropertiesTableContent
+                    key={index}
+                    id={item.id}
+                    name={item.name}
+                    type={item.type}
+                    number_of_units={item.number_of_units}
+                    rental_cost={item.rental_cost}
+                    tenants={item.tenants}
+                />
+            ))}
         </div>
     )
 }
 
-function PropertiesTableContent() {
+interface PropertiesTableContentProps {
+    id: number
+    name: string
+    type: string
+    number_of_units: number
+    rental_cost: number
+    tenants?: string[]
+}
+
+function PropertiesTableContent(props: PropertiesTableContentProps) {
+
+    const { id, name, type, number_of_units, rental_cost } = props ?? {}
+
+    function handleRemoveProperty() {
+        const data = { id: id }
+        axios
+            .post(`${process.env.NEXT_PUBLIC_API_URL}/user/removeProperty`, data)
+            .then((response) => {
+                toast.success("Property removed Successfully")
+            })
+            .catch((error) => {
+                console.error(error);
+            });
+    }
+
     return (
-        <div className="w-full flex px-[10px] rounded-[12px] h-[50px]">
-            <div className="w-[70px] h-full flex items-center justify-start pl-[10px]">
-                <span className="text-[16px] text-[#4693F8] font-medium">9</span>
-            </div>
-            <div className="w-[220px] h-full flex items-center justify-start pl-[10px]">
-                <span className="text-[16px] text-[#4693F8] font-medium">apartement x</span>
-            </div>
-            <div className="w-[170px] h-full flex items-center justify-start pl-[10px]">
-                <span className="text-[16px] text-[#4693F8] font-medium">house</span>
-            </div>
-            <div className="w-[180px] h-full flex items-center justify-start pl-[10px]">
-                <span className="text-[16px] text-[#4693F8] font-medium">6</span>
-            </div>
-            <div className="w-[190px] h-full flex items-center justify-start pl-[10px]">
-                <span className="text-[16px] text-[#4693F8] font-medium">600 $</span>
-            </div>
-            <div className="w-[210px] h-full flex items-center justify-start pl-[10px]">
-                <span className="text-[16px] text-[#4693F8] font-medium">ahmad ali</span>
-            </div>
-            <div className="w-10 flex-1 h-full flex justify-center items-center gap-[20px]">
-                <div className="relative object-cover w-[26px] h-[26px] cursor-pointer">
-                    <Image src="/icons/EditPropertyIcon.svg" alt="EditPropertyIcon" fill={true}>
+        <div className="flex flex-col w-full">
 
-                    </Image>
+            <div className="w-full flex px-[10px] rounded-[12px] h-[50px]">
+                <div className="w-[70px] h-full flex items-center justify-start pl-[10px]">
+                    <span className="text-[16px] text-[#4693F8] font-medium">{id}</span>
                 </div>
-                <div className="relative object-cover w-[26px] h-[26px] cursor-pointer">
-                    <Image src="/icons/RemovePropertyIcon.svg" alt="RemovePropertyIcon" fill={true}>
+                <div className="w-[220px] h-full flex items-center justify-start pl-[10px]">
+                    <span className="text-[16px] text-[#4693F8] font-medium">{name}</span>
+                </div>
+                <div className="w-[170px] h-full flex items-center justify-start pl-[10px]">
+                    <span className="text-[16px] text-[#4693F8] font-medium">{type}</span>
+                </div>
+                <div className="w-[180px] h-full flex items-center justify-start pl-[10px]">
+                    <span className="text-[16px] text-[#4693F8] font-medium">{number_of_units}</span>
+                </div>
+                <div className="w-[190px] h-full flex items-center justify-start pl-[10px]">
+                    <span className="text-[16px] text-[#4693F8] font-medium">{rental_cost} $</span>
+                </div>
+                <div className="w-[210px] h-full flex items-center justify-start pl-[10px]">
+                    <span className="text-[16px] text-[#4693F8] font-medium">tenants</span>
+                </div>
+                <div className="w-10 flex-1 h-full flex justify-center items-center gap-[20px]">
+                    <div className="relative object-cover w-[26px] h-[26px] cursor-pointer">
+                        <Image src="/icons/EditPropertyIcon.svg" alt="EditPropertyIcon" fill={true}>
 
-                    </Image>
+                        </Image>
+                    </div>
+                    <div onClick={handleRemoveProperty} className="relative object-cover w-[26px] h-[26px] cursor-pointer">
+                        <Image src="/icons/RemovePropertyIcon.svg" alt="RemovePropertyIcon" fill={true}>
+                        </Image>
+                    </div>
                 </div>
             </div>
+            <PropertiesTableSeparator />
         </div>
     )
 }

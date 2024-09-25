@@ -25,4 +25,35 @@ export class UserService {
             throw new NotFoundException('no user in this table');
         return all;
     }
+
+    async addNewProperty(bodyData, user) {
+        return this.prismaService.property.create({
+            data: {
+                name: bodyData.name,
+                type: bodyData.type,
+                number_of_units: Number(bodyData.number_of_units),
+                rental_cost: Number(bodyData.rental_cost),
+                propertyManagerId: user.id
+            },
+        });
+    }
+
+    async getAllProperty(user) {
+        return this.prismaService.property.findMany({
+            where: {
+                propertyManagerId: user.id
+            },
+            include: {
+                tenants: true,
+            },
+        });
+    }
+
+    async removeProperty(id) {
+        return this.prismaService.property.delete({
+            where: {
+                id: id
+            }
+        });
+    }
 }

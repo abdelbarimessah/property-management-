@@ -57,3 +57,5 @@ build/
 *.egg-info/
 backend/myenv/
 .vscode/
+.env
+./migrations
