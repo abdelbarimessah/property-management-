@@ -65,9 +65,9 @@ function AddPropertyPopUp(props: any) {
                 .post(`${process.env.NEXT_PUBLIC_API_URL}/user/NewProperty`, data)
                 .then((response) => {
                     toast.success("Property Added Successfully")
-                    console.log("succes for adding the new proprty", response.data);
                 })
                 .catch((error) => {
+                    toast.error("Error When Adding Property")
                     console.error(error);
                 });
         }

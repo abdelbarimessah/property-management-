@@ -66,12 +66,18 @@ interface PropertiesTableContentProps {
     type: string
     number_of_units: number
     rental_cost: number
-    tenants?: string[]
+    tenants: any
 }
 
 function PropertiesTableContent(props: PropertiesTableContentProps) {
 
-    const { id, name, type, number_of_units, rental_cost } = props ?? {}
+    const { id, name, type, number_of_units, rental_cost, tenants } = props ?? {}
+
+    const [showAllTenants, setShowAllTenants] = useState(false);
+
+    const handleToggleTenants = () => {
+        setShowAllTenants(!showAllTenants);
+    };
 
     function handleRemoveProperty() {
         const data = { id: id }
@@ -105,7 +111,22 @@ function PropertiesTableContent(props: PropertiesTableContentProps) {
                     <span className="text-[16px] text-[#4693F8] font-medium">{rental_cost} $</span>
                 </div>
                 <div className="w-[210px] h-full flex items-center justify-start pl-[10px]">
-                    <span className="text-[16px] text-[#4693F8] font-medium">tenants</span>
+                    {
+                        Array.isArray(tenants) && tenants.length > 0 ? (
+                            <div className="flex gap-[2px]"> 
+                                <span className="text-[16px] text-[#4693F8] font-medium cursor-pointer" onClick={handleToggleTenants}>
+                                    {tenants[0].name} {tenants.length > 1 && !showAllTenants && `(+${tenants.length - 1})`}
+                                </span>
+                                {showAllTenants && tenants.slice(1).map((tenant, index) => (
+                                    <span key={index} className="text-[16px] text-[#4693F8] font-medium">
+                                        {tenant.name}
+                                    </span>
+                                ))}
+                            </div>
+                        ) : (
+                            <span className="text-[16px] text-[#4693F8] font-medium">no tenants</span>
+                        )
+                    }
                 </div>
                 <div className="w-10 flex-1 h-full flex justify-center items-center gap-[20px]">
                     <div className="relative object-cover w-[26px] h-[26px] cursor-pointer">

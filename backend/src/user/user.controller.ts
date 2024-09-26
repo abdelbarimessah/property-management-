@@ -22,7 +22,6 @@ export class UsersController {
 
     @Post('NewProperty')
     async setNewProperty(@Body() bodyData, @CurrentUser() user: PropertyManager) {
-        console.log("bodyData: ", bodyData);
         return await this.userService.addNewProperty(bodyData, user);
     }
 
@@ -35,5 +34,23 @@ export class UsersController {
     async removeProperty (@Body() bodyData)
     {
         return await this.userService.removeProperty(bodyData.id);
+    }
+
+    @Post('NewTenants')
+    async setNewTenants (@Body() bodyData)
+    {
+        return await this.userService.setNewTenants(bodyData);
+    }
+
+    @Get('allTenants')
+    async getAllTenants (@CurrentUser() user: PropertyManager)
+    {
+        return await this.userService.getAllTenants(user);
+    }
+
+    @Post('removeTenant')
+    async removeTenant (@Body() bodyData)
+    {
+        return await this.userService.removeTenant(bodyData.id);
     }
 }

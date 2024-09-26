@@ -30,7 +30,7 @@ model Tenant {
   rentalPayments  RentalPayment[]
   created_at      DateTime        @default(now())
   updated_at      DateTime        @updatedAt
-}
+}                                         
 
 model RentalPayment {
   id           Int      @id @default(autoincrement())
