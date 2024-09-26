@@ -56,4 +56,39 @@ export class UserService {
             }
         });
     }
+
+    async setNewTenants(bodyData) {
+        return this.prismaService.tenant.create({
+            data: {
+                name: bodyData.name,
+                contact_details: bodyData.contact_details,
+                section: bodyData.section,
+                property: {
+                    connect: { id: bodyData.property_id },
+                },
+            }
+        })
+    }
+
+    async getAllTenants (user) 
+    {
+        return this.prismaService.tenant.findMany({
+            where:{
+                property: {
+                    propertyManagerId: user.id
+                },
+            },
+            include: {
+                property: true,
+            },
+        })
+    }
+
+    async removeTenant(id) {
+        return this.prismaService.tenant.delete({
+            where: {
+                id: id
+            }
+        });
+    }
 }

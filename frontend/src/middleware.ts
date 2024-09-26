@@ -5,8 +5,6 @@ export async function middleware(request: NextRequest) {
   const cookie = request.cookies.get("authorization");
   if (!cookie) return redirect("/SignIn");
   const backendUrl = process.env.NEXT_PUBLIC_API_URL;
-  console.log("the backend url is : ", backendUrl);
-
 
   const res = await fetch('http://localhost:3000/user/me', {
     headers: {

@@ -1,9 +1,9 @@
-function Page ()
+import { Tenants } from "@/components/template"
+
+function TenantPage ()
  {
     return (
-        <div>
-
-        </div>
+        <Tenants/>
     )  
  }
- export default Page
+ export default TenantPage
