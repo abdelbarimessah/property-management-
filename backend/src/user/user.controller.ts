@@ -42,6 +42,12 @@ export class UsersController {
         return await this.userService.setNewTenants(bodyData);
     }
 
+    @Post('UpdateTenants')
+    async UpdateTenants (@Body() bodyData)
+    {
+        return await this.userService.UpdateTenants(bodyData);
+    }
+
     @Get('allTenants')
     async getAllTenants (@CurrentUser() user: PropertyManager)
     {

@@ -1,0 +1,17 @@
+BACKEND_DIR=./backend
+
+all: docker prisma backend
+
+docker:
+	docker-compose up -d
+
+prisma:
+	cd $(BACKEND_DIR) && npx prisma migrate dev
+
+backend:
+	cd $(BACKEND_DIR) && npm i && npm run start:dev
+
+down:
+	docker-compose down
+
+.PHONY: all docker prisma backend down

@@ -1,0 +1,10 @@
+FRONTEND_DIR=./frontend
+
+# Default task
+all: frontend
+
+# Task to always run the frontend command
+.PHONY: frontend
+
+frontend:
+	cd $(FRONTEND_DIR) && npm i && npm run dev
