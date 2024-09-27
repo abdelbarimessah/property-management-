@@ -27,7 +27,7 @@ export class UserService {
     }
 
     async addNewProperty(bodyData, user) {
-        return this.prismaService.property.create({
+        return await this.prismaService.property.create({
             data: {
                 name: bodyData.name,
                 type: bodyData.type,
@@ -39,7 +39,7 @@ export class UserService {
     }
 
     async getAllProperty(user) {
-        return this.prismaService.property.findMany({
+        return await this.prismaService.property.findMany({
             where: {
                 propertyManagerId: user.id
             },
@@ -50,7 +50,7 @@ export class UserService {
     }
 
     async removeProperty(id) {
-        return this.prismaService.property.delete({
+        return await this.prismaService.property.delete({
             where: {
                 id: id
             }
@@ -58,7 +58,7 @@ export class UserService {
     }
 
     async setNewTenants(bodyData) {
-        return this.prismaService.tenant.create({
+        return await this.prismaService.tenant.create({
             data: {
                 name: bodyData.name,
                 contact_details: bodyData.contact_details,
@@ -71,25 +71,23 @@ export class UserService {
     }
 
 
-    async UpdateTenants (bodyData) 
-    {
-        return this.prismaService.tenant.update({
-            where: { 
+    async UpdateTenants(bodyData) {
+        return await this.prismaService.tenant.update({
+            where: {
                 id: bodyData.id
-             },
-             data: {
+            },
+            data: {
                 name: bodyData.name,
                 contact_details: bodyData.contact_details,
-                section : bodyData.section,
+                section: bodyData.section,
                 property_id: bodyData.property_id,
-             }
-          });
+            }
+        });
     }
 
-    async getAllTenants (user) 
-    {
-        return this.prismaService.tenant.findMany({
-            where:{
+    async getAllTenants(user) {
+        return await this.prismaService.tenant.findMany({
+            where: {
                 property: {
                     propertyManagerId: user.id
                 },
@@ -101,10 +99,44 @@ export class UserService {
     }
 
     async removeTenant(id) {
-        return this.prismaService.tenant.delete({
+        return await this.prismaService.tenant.delete({
             where: {
                 id: id
             }
+        });
+    }
+
+    async setNewPayment(bodyData) {
+
+        const payment_date = new Date(bodyData.payment_date);
+        return await this.prismaService.rentalPayment.create({
+            data: {
+                tenant_id: bodyData.tenant_id,
+                amount: bodyData.amount,
+                payment_date: payment_date,
+                settled: bodyData.settled,
+            }
+        })
+    }
+
+    async getAllPayment(user) {
+        const propertyManagerId = user.id;
+
+        return await this.prismaService.rentalPayment.findMany({
+            where: {
+                tenant: {
+                    property: {
+                        propertyManagerId: propertyManagerId,
+                    },
+                },
+            },
+            include: {
+                tenant: {
+                    include: {
+                        property: true,
+                    },
+                },
+            },
         });
     }
 }

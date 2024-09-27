@@ -155,9 +155,8 @@ function AddTenantPopUp(props: any) {
 
 
     function handleSave() {
+        
         const data = { name: name, contact_details: contact_details, section: section, property_id: propertyId }
-
-
 
         axios
             .post(`${process.env.NEXT_PUBLIC_API_URL}/user/NewTenants`, data)
