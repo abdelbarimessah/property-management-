@@ -42,8 +42,8 @@ Before running the project, ensure you have the following installed on your mach
 
 1. **Clone the Repository**:
    ```bash
-   git clone <[repository-link](https://github.com/abdelbarimessah/property-management-)>
-   cd <property-management->
+   git clone https://github.com/abdelbarimessah/property-management-
+   cd property-management-
    ```
 
 2. **Run Backend**:
