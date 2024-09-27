@@ -70,6 +70,22 @@ export class UserService {
         })
     }
 
+
+    async UpdateTenants (bodyData) 
+    {
+        return this.prismaService.tenant.update({
+            where: { 
+                id: bodyData.id
+             },
+             data: {
+                name: bodyData.name,
+                contact_details: bodyData.contact_details,
+                section : bodyData.section,
+                property_id: bodyData.property_id,
+             }
+          });
+    }
+
     async getAllTenants (user) 
     {
         return this.prismaService.tenant.findMany({

@@ -1,6 +1,6 @@
 'use client';
 import { cn } from '@/lib/utils';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 type InputAndLabelProps = {
     label: string;
@@ -16,12 +16,24 @@ type InputAndLabelProps = {
 };
 
 function InputAndLabelTenants(props: InputAndLabelProps) {
-    const { label, placeholder, classname, type , nameData,contact_detailsData, sectionData  } =
+    const { label, placeholder, classname, type, nameData, contact_detailsData, sectionData } =
         props ?? {};
 
     const [change, setChange] = useState(false);
     const [value, setValue] = useState('');
 
+
+
+    useEffect(() => {
+        if (value === '') {
+            if (type === "name")
+                nameData(placeholder)
+            else if (type === "contact")
+                contact_detailsData(placeholder)
+            else if (type === "section")
+                sectionData(placeholder)
+        }
+    })
 
     return (
         <div className="flex flex-col gap-[6px]">
@@ -41,11 +53,11 @@ function InputAndLabelTenants(props: InputAndLabelProps) {
                     value={value}
                     onChange={(e) => {
                         setValue(e.target.value);
-                        if(type === "name")
+                        if (type === "name")
                             nameData(e.target.value)
-                        else if(type === "contact")
+                        else if (type === "contact")
                             contact_detailsData(e.target.value)
-                        else if(type === "section")
+                        else if (type === "section")
                             sectionData(e.target.value)
                     }}
                     onClick={() => {
@@ -53,6 +65,12 @@ function InputAndLabelTenants(props: InputAndLabelProps) {
                     }}
                     onBlur={() => {
                         if (value === '') {
+                            if (type === "name")
+                                nameData(placeholder)
+                            else if (type === "contact")
+                                contact_detailsData(placeholder)
+                            else if (type === "section")
+                                sectionData(placeholder)
                             setChange(false);
                         }
                     }}
