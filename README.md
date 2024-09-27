@@ -40,7 +40,7 @@ Follow these steps to set up and run the application:
 1. **Clone the Repository**
 
    ```bash
-   git clone [<repository_url>](https://github.com/abdelbarimessah/property-management-)
+   git clone https://github.com/abdelbarimessah/property-management-
    cd property-management-
    ```
 
