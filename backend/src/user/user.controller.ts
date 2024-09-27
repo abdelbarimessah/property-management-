@@ -59,4 +59,16 @@ export class UsersController {
     {
         return await this.userService.removeTenant(bodyData.id);
     }
+
+    @Post('NewPayment')
+    async newPayment (@Body() bodyData)
+    {
+        return await this.userService.setNewPayment(bodyData);
+    }
+
+    @Get('AllPayments')
+    async getAllPayments(@CurrentUser() user: PropertyManager)
+    {
+        return await this.userService.getAllPayment(user)
+    }
 }

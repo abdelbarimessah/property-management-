@@ -1,9 +1,8 @@
-function Page ()
- {
-    return (
-        <div>
+import { Payments } from "@/components/template"
 
-        </div>
-    )  
- }
- export default Page
+function PaymentsPage() {
+    return (
+        <Payments />
+    )
+}
+export default PaymentsPage
