@@ -32,7 +32,7 @@ function PropertiesTable() {
 
     useEffect(() => {
         axios
-            .get(`${process.env.NEXT_PUBLIC_API_URL}/user/allProperty`)
+            .get(`${process.env.NEXT_PUBLIC_API_URL}/properties/allProperty`)
             .then((response) => {
                 setData(response.data)
             })
@@ -82,7 +82,7 @@ function PropertiesTableContent(props: PropertiesTableContentProps) {
     function handleRemoveProperty() {
         const data = { id: id }
         axios
-            .post(`${process.env.NEXT_PUBLIC_API_URL}/user/removeProperty`, data)
+            .post(`${process.env.NEXT_PUBLIC_API_URL}/properties/removeProperty`, data)
             .then((response) => {
                 toast.success("Property removed Successfully")
             })
@@ -129,11 +129,6 @@ function PropertiesTableContent(props: PropertiesTableContentProps) {
                     }
                 </div>
                 <div className="w-10 flex-1 h-full flex justify-center items-center gap-[20px]">
-                    <div className="relative object-cover w-[26px] h-[26px] cursor-pointer">
-                        <Image src="/icons/EditPropertyIcon.svg" alt="EditPropertyIcon" fill={true}>
-
-                        </Image>
-                    </div>
                     <div onClick={handleRemoveProperty} className="relative object-cover w-[26px] h-[26px] cursor-pointer">
                         <Image src="/icons/RemovePropertyIcon.svg" alt="RemovePropertyIcon" fill={true}>
                         </Image>
@@ -166,9 +161,7 @@ function PropertiesTableHead() {
             <div className="w-[210px] h-full flex items-center justify-start pl-[10px]">
                 <span className="text-[16px] text-[#68516A] font-medium">Tenants</span>
             </div>
-            <div className="w-10 flex-1 h-full flex items-center justify-start pl-[10px] gap-1">
-                <span className="text-[16px] text-[#68516A] font-medium">Edit</span>
-                <span className="text-[16px] text-[#68516A] font-medium">/</span>
+            <div className="w-10 flex-1 h-full flex items-center justify-center pl-[10px] gap-1">
                 <span className="text-[16px] text-[#68516A] font-medium">Remove</span>
             </div>
         </div>

@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Logger, Post, UseGuards } from "@nestjs/common";
+import { Controller, Get, UseGuards } from "@nestjs/common";
 import { UserService } from "./user.service";
 import { CurrentUser } from 'src/auth/current-user.decorator';
 import { PropertyManager } from '@prisma/client';
@@ -20,55 +20,6 @@ export class UsersController {
         return user;
     }
 
-    @Post('NewProperty')
-    async setNewProperty(@Body() bodyData, @CurrentUser() user: PropertyManager) {
-        return await this.userService.addNewProperty(bodyData, user);
-    }
 
-    @Get('allProperty')
-    async getAllProperty(@CurrentUser() user: PropertyManager) {
-        return await this.userService.getAllProperty(user)
-    }
 
-    @Post('removeProperty')
-    async removeProperty (@Body() bodyData)
-    {
-        return await this.userService.removeProperty(bodyData.id);
-    }
-
-    @Post('NewTenants')
-    async setNewTenants (@Body() bodyData)
-    {
-        return await this.userService.setNewTenants(bodyData);
-    }
-
-    @Post('UpdateTenants')
-    async UpdateTenants (@Body() bodyData)
-    {
-        return await this.userService.UpdateTenants(bodyData);
-    }
-
-    @Get('allTenants')
-    async getAllTenants (@CurrentUser() user: PropertyManager)
-    {
-        return await this.userService.getAllTenants(user);
-    }
-
-    @Post('removeTenant')
-    async removeTenant (@Body() bodyData)
-    {
-        return await this.userService.removeTenant(bodyData.id);
-    }
-
-    @Post('NewPayment')
-    async newPayment (@Body() bodyData)
-    {
-        return await this.userService.setNewPayment(bodyData);
-    }
-
-    @Get('AllPayments')
-    async getAllPayments(@CurrentUser() user: PropertyManager)
-    {
-        return await this.userService.getAllPayment(user)
-    }
 }
