@@ -62,7 +62,7 @@ function AddPropertyPopUp(props: any) {
         else {
             setAddPopUp(false)
             axios
-                .post(`${process.env.NEXT_PUBLIC_API_URL}/user/NewProperty`, data)
+                .post(`${process.env.NEXT_PUBLIC_API_URL}/properties/NewProperty`, data)
                 .then((response) => {
                     toast.success("Property Added Successfully")
                 })

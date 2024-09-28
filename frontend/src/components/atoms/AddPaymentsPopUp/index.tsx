@@ -27,7 +27,7 @@ function AddPaymentsPopUp(props: any) {
         else {
 
             axios
-                .post(`${process.env.NEXT_PUBLIC_API_URL}/user/NewPayment`, data)
+                .post(`${process.env.NEXT_PUBLIC_API_URL}/payments/NewPayment`, data)
                 .then((response) => {
                     toast.success("Payment Added Successfully")
                     setAddPopUp(false)
@@ -41,7 +41,7 @@ function AddPaymentsPopUp(props: any) {
 
     useEffect(() => {
         axios
-            .get(`${process.env.NEXT_PUBLIC_API_URL}/user/allTenants`)
+            .get(`${process.env.NEXT_PUBLIC_API_URL}/tenants/allTenants`)
             .then((response) => {
                 setTenants(response.data)
             })

@@ -35,7 +35,7 @@ function TenantsTable() {
 
     useEffect(() => {
         axios
-            .get(`${process.env.NEXT_PUBLIC_API_URL}/user/allTenants`)
+            .get(`${process.env.NEXT_PUBLIC_API_URL}/tenants/allTenants`)
             .then((response) => {
                 setData(response.data)
             })
@@ -144,7 +144,7 @@ function AddTenantPopUp(props: any) {
 
     useEffect(() => {
         axios
-            .get(`${process.env.NEXT_PUBLIC_API_URL}/user/allProperty`)
+            .get(`${process.env.NEXT_PUBLIC_API_URL}/properties/allProperty`)
             .then((response) => {
                 setPropertiesData(response.data)
             })
@@ -159,7 +159,7 @@ function AddTenantPopUp(props: any) {
         const data = { name: name, contact_details: contact_details, section: section, property_id: propertyId }
 
         axios
-            .post(`${process.env.NEXT_PUBLIC_API_URL}/user/NewTenants`, data)
+            .post(`${process.env.NEXT_PUBLIC_API_URL}/tenants/NewTenants`, data)
             .then((response) => {
                 toast.success("Tenant Added Successfully")
                 setAddPopUp(false)
@@ -272,7 +272,7 @@ function TenantsTableContent(props: TenantsTableContentProps) {
     function handleRemoveTenant() {
         const data = { id: id }
         axios
-            .post(`${process.env.NEXT_PUBLIC_API_URL}/user/removeTenant`, data)
+            .post(`${process.env.NEXT_PUBLIC_API_URL}/tenants/removeTenant`, data)
             .then((response) => {
                 toast.success("Tenant removed Successfully")
             })
@@ -358,7 +358,7 @@ function UpdateInfoPopUp(props: updateInfoPopUpProps) {
 
     useEffect(() => {
         axios
-            .get(`${process.env.NEXT_PUBLIC_API_URL}/user/allProperty`)
+            .get(`${process.env.NEXT_PUBLIC_API_URL}/properties/allProperty`)
             .then((response) => {
                 setPropertiesData(response.data)
             })
@@ -370,7 +370,7 @@ function UpdateInfoPopUp(props: updateInfoPopUpProps) {
     function handleSave() {
         const data = { name: name, contact_details: contact_details, section: section, property_id: propertyId, id: id }
         axios
-            .post(`${process.env.NEXT_PUBLIC_API_URL}/user/UpdateTenants`, data)
+            .post(`${process.env.NEXT_PUBLIC_API_URL}/tenants/UpdateTenants`, data)
             .then((response) => {
                 toast.success("Tenant Added Successfully")
                 setShowUpdate(false)
